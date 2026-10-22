@@ -9,7 +9,7 @@
 // menunjuk ke bot lama. Bila bot dipindahkan, tukar baris ini
 // sahaja (tanpa "/" di hujung), contoh: "https://stream.contoh.com"
 // ----------------------------------------------------------
-const STREAM_HOST = "https://nuvio-telegram-addon.onrender.com";
+const STREAM_HOST = "https://daryz-addon.onrender.com";
 
 // ==========================================
 // HELPER FUNCTION UNTUK TAJUK & DESCRIPTION EPISOD
