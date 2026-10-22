@@ -9,7 +9,7 @@
 // menunjuk ke bot lama. Bila bot dipindahkan, tukar baris ini
 // sahaja (tanpa "/" di hujung), contoh: "https://stream.contoh.com"
 // ----------------------------------------------------------
-const STREAM_HOST = "https://daryz-addon.onrender.com";
+const STREAM_HOST = "https://nuvio-telegram-addon.onrender.com";
 
 // ==========================================
 // HELPER FUNCTION UNTUK TAJUK & DESCRIPTION EPISOD
@@ -4133,7 +4133,7 @@ if (path.includes("/proxy/") || path.includes(".mp4")) {
     return new Response(upstreamResp.body, { status: upstreamResp.status, headers: newHeaders });
   } 
   // 2. Kalau telegram ID (takde titik)
-  else {
+ else {
     // 1. Cuba cari dulu dalam KV Cloudflare
     let fileData = null;
     try {
@@ -4145,7 +4145,7 @@ if (path.includes("/proxy/") || path.includes(".mp4")) {
       if (it) fileData = { telegram_file_id: it.telegram_file_id || it.file_id };
     }
 
-    // 2. Kalau ada dalam KV, guna laluan Telegram API seperti biasa
+    // 2. Kalau ada dalam KV, guna laluan Telegram API
     if (fileData && fileData.telegram_file_id) {
       const gf = await fetch(`https://api.telegram.org/bot${env.BOT_TOKEN}/getFile?file_id=${fileData.telegram_file_id}`).then(r => r.json());
       
@@ -4163,8 +4163,8 @@ if (path.includes("/proxy/") || path.includes(".mp4")) {
       }
     }
 
-    // 3. FALBACK: Kalau tak jumpa dalam KV, terus hantar ke server Render anda!
-    const renderUrl = `https://nuvio-telegram-addon.onrender.com/dl/${fileName}`;
+    // 3. FALLBACK: Jika tiada dalam KV, hantar ke server Render anda!
+    const renderUrl = `https://daryz-addon.onrender.com/dl/${fileName}`;
     
     let renderHeaders = new Headers();
     const rangeHeader = request.headers.get("Range");
