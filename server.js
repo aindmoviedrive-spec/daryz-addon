@@ -39,7 +39,7 @@ const manifest = {
     resources: ["catalog", "stream", "meta"],
     types: ["series"],
     idPrefixes: [
-        "kisah_sahabat_series", "running_man_series", "running_man_2_series", "uas_series", "running_man_3_series", "running_man_4_series", "running_man_5_series", "running_man_6_series", "siri_sirah_series", "mm_", "ms_" "am_", "mumul_zzumul_series", "ma_boy_series", "iloveyou_loser_series", "blue_birthday_series", "daebaking_series", "like_series", "dash_series", "satria_7pahlawan_series", "tiny_planet_series", "mr_bean_s1_series", "mr_bean_s2_series", "mr_bean_s3_series", "mr_bean_s4_series", "mahsyar_series", "filem_dakwah_sengketa_series", "sirah_nabawiyyah_series", "hagemaru_series", "ninja_boy_series", 
+        "kisah_sahabat_series", "running_man_series", "running_man_2_series", "uas_series", "running_man_3_series", "running_man_4_series", "running_man_5_series", "running_man_6_series", "siri_sirah_series", "mm_", "ms_", "am_", "mumul_zzumul_series", "ma_boy_series", "iloveyou_loser_series", "blue_birthday_series", "daebaking_series", "like_series", "dash_series", "satria_7pahlawan_series", "tiny_planet_series", "mr_bean_s1_series", "mr_bean_s2_series", "mr_bean_s3_series", "mr_bean_s4_series", "mahsyar_series", "filem_dakwah_sengketa_series", "sirah_nabawiyyah_series", "hagemaru_series", "ninja_boy_series", 
         "doraemon_series", "doraemon_movie_series", "pokemon_journeys_series", "midori_days_series", "anak_anak_sidek_series", "dragonball_movie_series", "naruto_movie_series", "a_teen_series", "a_teen2_series", "handmade_love_series", "17_special_series", "ending_again_series",
         "ueki_series", "tomjerry_series", "conan_series", "conan_movie_series", "kaito_kid_series", "magic_kaito_series", "ginban_series", "black_cat_series", "digimon_savers_series", "be_my_boyfriend_series", "mermaid_prince_series", "dalgona_series", "flower_series",
         "digimon_01_series", "digimon_02_series", "digimon_03_series", "digimon_adventure2020_series", "digimon_tamers_series", "digimon_frontier_series", "chiquititas_song_series", "chiquititas_series", "shin_chan_series", "akhir_zaman_series", "hada_kiddy_series", "kd_malay_series", "kd_eng_series", "edens_zero_series","nisekoi_series",  "nisekoi_2_series", "omar_dan_hana_series", "time_bokan_24_series", "black_bullet_series", "one_punch_man_series", "high_rise_invasion_series", "demon_slayer_series", "gundam_series", "naruto_1-220_series", "boruto_series", "jjk_series"
@@ -1172,7 +1172,7 @@ const seriesDatabase = {
             { id: "mm_seniman_bujang_lapok", name: "Seniman Bujang Lapok", poster: "https://i.postimg.cc/wjJ5TvK7/Seniman-Bujang-Lapok.jpg", description: "File size: 222.3 MiB", url: `${STREAM_HOST}/dl/6adb4a4c092762b16756368e` },
             { id: "mm_bujang_lapok", name: "Bujang Lapok", poster: "https://i.postimg.cc/Xvd53DCc/Bujang-Lapok.jpg", description: "File size: 247.72 MiB", url: `${STREAM_HOST}/dl/6adb4a4c092762b16756368f` },
             { id: "mm_ali_baba_bujang_lapok", name: "Ali Baba Bujang Lapok", poster: "https://i.postimg.cc/xdMmYFzK/Ali-Baba-Bujang-Lapok.jpg", description: "File size: 275.55 MiB", url: `${STREAM_HOST}/dl/6adb4a18092762b16756368b` }
-        ])
+        ]
     },
     "malaysian_movies_seram_catalog": {
         id: "malaysian_seram_movies_catalog",
@@ -1210,7 +1210,7 @@ const seriesDatabase = {
             { id: "mm_titisan_setan", name: "Titisan Setan", poster: "https://i.postimg.cc/59KLK3yS/titisansetan.jpg", description: "Cerita bermula apabila seorang gadis bernama Melissa (lakonan Wendy Wilson) ingin meluangkan masa pada hujung minggu bersama kekasihnya, Bara (lakonan Baim Wong). Melissa, yang selama ini dibesarkan oleh neneknya dengan disiplin yang ketat, terpaksa berbohong kepada neneknya demi mendapatkan izin untuk keluar. Dia memberi alasan kononnya mahu melawat ibu kepada sahabatnya, Gaby, yang sedang sakit.", url: `${STREAM_HOST}/dl/6acc66136e979983cdce55d7` },
             { id: "mm_sumpahan_kum_kum", name: "Sumpahan Kum-Kum", poster: "https://i.postimg.cc/jq3P3X2Q/sumpahankumkum.jpg", description: "Filem ini mengisahkan tentang Mila (lakonan Shima Anuar), seorang gadis yang mengalami masalah jerawat yang serius dan berasa amat malu serta tertekan dengan penampilan fizikalnya. Demi mendapatkan wajah yang jelita, dia telah pergi menemui seorang dukun kampung bernama Mak Tom (lakonan Lydiawati) untuk memakai susuk.", url: `${STREAM_HOST}/dl/6acc66136e979983cdce55d3` },
             { id: "mm_volkswagen_kuning", name: "Volkswagen Kuning", poster: "https://i.postimg.cc/KcpBpNjJ/volkswagenkuning.jpg", description: "Filem ini mengisahkan sepasang kekasih yang telah pun bertunang, Fuad (lakonan Pekin Ibrahim) dan Sarah (lakonan Atikah Suhaime), yang dalam perjalanan pulang ke kampung halaman Fuad. Di tengah perjalanan, Fuad bercadang untuk singgah makan di sebuah kedai makan yang terkenal dengan hidangan ikan patin. Oleh kerana tidak biasa dengan jalan tersebut, mereka menggunakan aplikasi navigasi Waze, namun akhirnya tersesat selepas senja akibat kehilangan capaian internet.", url: `${STREAM_HOST}/dl/6acc66136e979983cdce55d4` }
-        ])  
+        ]
     },
     "animation_movies_catalog": {
         id: "animation_movies_catalog",
