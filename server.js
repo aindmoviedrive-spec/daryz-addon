@@ -1106,7 +1106,7 @@ const seriesDatabase = {
             { title: "Ep 44 - Mencari Pangkalan Dakwah Baru", url: `${STREAM_HOST}/dl/6ad8b25c6e979983cdce60f5` },
             { title: "Ep 45 - Enam Anak Muda Perintis Kota Nabi SAW", url: `${STREAM_HOST}/dl/6ad8a48f6e979983cdce60d6` },
             { title: "Ep 46 - Duta Dakwah & Guru Pertama ke Yathrib", url: `${STREAM_HOST}/dl/6ad8b25c6e979983cdce60f6` }
-        ]
+        ])
     },
     "ustaz_azlan_catalog": {
         id: "ustaz_azlan_catalog",
@@ -1150,7 +1150,7 @@ const seriesDatabase = {
             { id: "uam_nabi_sulaiman_ratu_balqis_v2", name: "Nabi Sulaiman & Ratu Balqis V2", poster: "https://i.postimg.cc/HnhfgCjX/NABI-SULAIMAN-amp-RATU-BALQIS.jpg", url: `${STREAM_HOST}/dl/6adb79ce6e979983cdce6192` },
             { id: "uam_kisah_nabi_musa_dan_bani_israel", name: "KISAH NABI MUSA DAN BANI ISRAEL", poster: "https://i.postimg.cc/d3xzYKD2/NABI-MUSA-amp-BANI-ISRAEL.jpg", url: `${STREAM_HOST}/dl/6adb79cb6e979983cdce6191` },
             { id: "uam_kisah_nabi_habakuk_yang_ramai_tidak_tahu", name: "Kisah Nabi Habakuk Yang Ramai Tidak Tahu", poster: "https://i.postimg.cc/SNzMb7vR/HABAKUK.jpg", url: `${STREAM_HOST}/dl/6adb79ce6e979983cdce6193` }
-        ])
+        ]
     },
     "malaysian_movies_catalog": {
         id: "malaysian_movies_catalog",
@@ -1322,7 +1322,7 @@ const seriesDatabase = {
             { title: "Oddbods Episode 32", url: `${STREAM_HOST}/dl/6adc967a6e979983cdce61bc` },
             { title: "Oddbods Episode 33", url: `${STREAM_HOST}/dl/6adc967a6e979983cdce61bd` },
             { title: "Oddbods Episode 34", url: `${STREAM_HOST}/dl/6adc967a6e979983cdce61b9` }
-        ]
+        ])
     },
     "mumul_zzumul_catalog": {
         id: "mumul_zzumul_series",
