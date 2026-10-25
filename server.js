@@ -1208,7 +1208,7 @@ const seriesDatabase = {
         id: "malaysian_seram_movies_catalog",
         isMulti: true,
         items: [
-            { id: "mm_tiang_seri", name: "Tiang Seri", poster: "https://i.postimg.cc/wMZcxpZg/Tiang-Seri.jpg", description: "Mengisahkan tentang bapa kepada seorang remaja bernama Nadrah yang telah membeli sebatang tiang kayu antik untuk mendirikan sebuah gazebo di kawasan rumah mereka. Ketika sedang melakukan kerja sekolah di gazebo tersebut, Nadrah terjumpa sebatang paku lama yang tertancap pada tiang itu lalu mencabutnya. Tindakan tersebut secara tidak sengaja telah membebaskan satu entiti/semangat jahat yang terperangkap di dalam tiang berkenaan. Makhluk ghaib tersebut kemudian merasuki badan Nadrah, menyebabkan dia mengalami mimpi ngeri berterusan dan bertindak agresif sehingga mencetuskan beberapa kes kematian misteri.", url: `${STREAM_HOST}/dl/6adc2d077776deedc8b75011` },
+            { id: "mm_tiang_seri", name: "Tiang Seri", poster: "https://i.postimg.cc/wMZcxpZg/Tiang-Seri.jpg", description: "Mengisahkan tentang bapa kepada seorang remaja bernama Nadrah yang telah membeli sebatang tiang kayu antik untuk mendirikan sebuah gazebo di kawasan rumah mereka. Ketika sedang melakukan kerja sekolah di gazebo tersebut, Nadrah terjumpa sebatang paku lama yang tertancap pada tiang itu lalu mencabutnya. Tindakan tersebut secara tidak sengaja telah membebaskan satu entiti/semangat jahat yang terperangkap di dalam tiang berkenaan. Makhluk ghaib tersebut kemudian merasuki badan Nadrah, menyebabkan dia mengalami mimpi ngeri berterusan dan bertindak agresif sehingga mencetuskan beberapa kes kematian misteri.", url: `${STREAM_HOST}/dl/6adcb8998c6c1a00b0ea66e7` },
             { id: "mm_munafik", name: "Munafik", poster: "https://i.postimg.cc/d3fC7qgF/munafik.jpg", description: "Adam (Syamsul Yusof) ialah seorang ustaz dan pengamal perubatan Islam yang jiwanya rapuh serta hilang punca akibat gagal menerima takdir (Qada dan Qadar) atas kematian isterinya. Selepas bersetuju untuk merawat Maria melalui rukyah, Adam mula dihantui pelbagai peristiwa aneh, seram, dan ujian yang menguji semula keimanannya terhadap Allah SWT.", url: `${STREAM_HOST}/dl/6acc06936e979983cdce55cb` },
             { id: "mm_munafik_2", name: "Munafik 2", poster: "https://i.postimg.cc/fypjWNph/Munafik-2.jpg", description: "staz Adam berhadapan dengan ajaran sesat yang dipimpin oleh seorang lelaki kejam bernama Abu Jar (Nasir Bilal Khan) di sebuah perkampungan terpencil. Abu Jar menggunakan sihir dan tipu muslihat untuk merosakkan akidah penduduk kampung supaya tidak lagi percaya kepada Allah dan ajaran Islam.", url: `${STREAM_HOST}/dl/6adc31436e979983cdce6196` },
             { id: "mm_long_khong_2", name: "Long Khong 2", poster: "https://i.postimg.cc/tJwtRjwG/long-khong-2.jpg", description: "Panor sebenarnya mempunyai hubungan sulit dengan beberapa orang lelaki, sehingga menyebabkan dia dimalukan, diseksa, dan dikenakan sihir oleh sekumpulan pelajar. Untuk melindungi dirinya dan membalas dendam terhadap mereka yang mengkhianatinya serta pawang (Porn) yang tidak bermoral, Panor mendalami dan menggunakan ilmu hitam yang kuat.", url: `${STREAM_HOST}/dl/6adc292f9f12d6e309685176` },
@@ -4114,29 +4114,32 @@ async function savePreferences(request, env) {
     return json({ success: false, message: "Data tak sah!" }, 400);
 }
 
-function handleCatalog(catalogId) {
+function handleCatalog(catalogId, request) {
+    const url = new URL(request.url);
+    const searchQuery = url.searchParams.get('search') || '';
+
     const series = catalogLookup.get(catalogId);
     if (!series) return json({ metas: [] });
-    if (series.isMulti) {
-        return json({
-            metas: series.items.map(item => ({
-                id: item.id,
-                type: "series",
-                name: item.name,
-                poster: item.poster,
-                description: item.description
-            }))
-        });
+    
+    let metas = [];
+    if (series.isMulti && series.items) {
+        metas = series.items;
+    } else if (series.episodes || series.items) {
+        metas = series.items || [{ id: series.id, name: series.name, poster: series.poster, description: series.description, type: 'series' }];
+    } else if (Array.isArray(series)) {
+        metas = series;
     }
-    return json({
-        metas: [{
-            id: series.id,
-            type: "series",
-            name: series.name,
-            poster: series.poster,
-            description: series.description
-        }]
-    });
+
+    // Tapis senarai mengikut apa yang ditaip di ruangan carian Nuvio
+    if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        metas = metas.filter(item => 
+            (item.name && item.name.toLowerCase().includes(query)) ||
+            (item.description && item.description.toLowerCase().includes(query))
+        );
+    }
+
+    return json({ metas });
 }
 
 function handleMeta(rawId) {
@@ -4252,6 +4255,48 @@ export default {
 
         const url = new URL(request.url);
         const path = url.pathname;
+        // === KODE TAMBAHAN UNTUK PENCARIAN (SEARCH) DI NUVIO ===
+// === KOD PENCARIAN (SEARCH) YANG BETUL ===
+    if (path.startsWith('/catalog/')) {
+        const parts = path.split('/');
+        const type = parts[2];
+        const catalogId = parts[3]?.replace('.json', '');
+        
+        let searchQuery = url.searchParams.get('search') || '';
+        if (!searchQuery && parts[4]) {
+            const searchPart = parts[4].replace('.json', '');
+            if (searchPart.startsWith('search=')) {
+                searchQuery = decodeURIComponent(searchPart.split('=')[1] || '');
+            }
+        }
+
+        let metas = [];
+        const series = typeof catalogLookup !== 'undefined' ? catalogLookup.get(catalogId) : null;
+
+        if (series) {
+            if (series.isMulti && series.items) {
+                metas = series.items;
+            } else if (series.episodes || series.items) {
+                metas = series.items || [{ id: series.id, name: series.name, poster: series.poster, description: series.description, type: type || 'series' }];
+            } else if (Array.isArray(series)) {
+                metas = series;
+            }
+        }
+
+        if (searchQuery) {
+            const query = searchQuery.toLowerCase();
+            metas = metas.filter(item => 
+                (item.name && item.name.toLowerCase().includes(query)) ||
+                (item.description && item.description.toLowerCase().includes(query))
+            );
+        }
+
+        return new Response(JSON.stringify({ metas }), {
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+        });
+    }
+
+    // ========================================================
 // === FIX HYBRID - SUPPORT CATBOX + TELEGRAM ===
 if (path.includes("/proxy/") || path.includes(".mp4")) {
   const fileName = path.split("/").pop().split("?")[0];
@@ -4347,11 +4392,11 @@ if (path === "/manifest.json") {
 }
 
 if (parts[0] === "catalog" || parts[0] === "meta" || parts[0] === "stream") {
-  const id = decodeURIComponent((parts[2] || "").replace(/\.json$/, ""));
-  if (parts[0] === "catalog") return handleCatalog(id);
-  if (parts[0] === "meta") return handleMeta(id);
-  if (parts[0] === "stream") return handleStream(id);
-}
+        const id = decodeURIComponent((parts[2] || "").replace(/\.json$/, ""));
+        if (parts[0] === "catalog") return handleCatalog(id, request); // <-- Tambah , request di sini
+        if (parts[0] === "meta") return handleMeta(id);
+        if (parts[0] === "stream") return handleStream(id);
+    }
 
 if (parts[0] === "stremio" && parts.length >= 3 && request.method === "GET") {
   const user = decodeURIComponent(parts[1]);
